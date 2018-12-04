@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { BaseService } from './base.service';
 import { Observable } from 'rxjs/Rx';
+//Authorized request
+const auth = {headers: { Authorization: "bearer " + localStorage.getItem("auth-token")}};
 
 class ProfileService extends BaseService {
 
@@ -14,7 +16,7 @@ class ProfileService extends BaseService {
     }
 
     public get(): Observable<any> {
-        return Observable.fromPromise(axios.get(`${this.api}/profile/me`))
+        return Observable.fromPromise(axios.get(`${this.api}/profile/me`,auth))
         .map((res: any) => res.data)
         .catch((error: any) => this.handleError(error.response));
     }
